@@ -3,6 +3,20 @@ import csv
 
 csvpath = os.path.join('Resources', 'election_data.csv')
 
+total_votes = 0 
+candidate_list = []
+candidate_dict = {}
+
+winning_vote = 0 
+winner = ""
+
+with open(csvpath, newline="") as csvfile:
+
+        csvreader = csv.reader(csvfile, delimiter=",")
+        reader = csv.reader(csvfile)
+        next(reader, None)
+
+        for row in reader:
      # start counting total votes    
           
     # get the reference to the candidate name from the row 
