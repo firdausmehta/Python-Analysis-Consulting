@@ -3,7 +3,7 @@ import os
 import csv 
 
 #working directory
-csvpath=os.path.join('..','Resources','budget_data.csv')
+csvpath=os.path.join(C:\Users\firme\OneDrive\Documents\GitHub\python-challenge\PyBank\Resources\'budget_data.csv')
 with open(csvpath, newline='') as csvfile:
     csvreader = csv.reader(csvfile, delimiter=',')
     print(csvreader)
