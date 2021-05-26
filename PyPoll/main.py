@@ -20,17 +20,24 @@ with open(csvpath, newline="") as csvfile:
             # start counting total votes    
                    
             # get the reference to the candidate name from the row 
-           
+            
             # begin the if statement 
-           
+          
             # add the candidate to the list_candidate 
-
-    
+                   
     # print the total votes 
-    
+    print(f"Election Results")
+    print(f"--------------------")
+    print(f"Total Votes: {total_votes}")
+    print(f"--------------------")
+
+    datafile.write(f"Election Results\n")
+    datafile.write(f"--------------------\n")
+    datafile.write(f"Total Votes: {total_votes}\n")
+    datafile.write(f"--------------------\n")
     
     # loop through the candidates and calculate their percentage of the votes 
-  
+ 
 
     # print to terminal and the txt file       
     print(f"--------------------")
