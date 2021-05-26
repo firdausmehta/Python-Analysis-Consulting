@@ -1,67 +1,60 @@
-#import budget data 
 import os
-import csv 
+import csv
 
-#working directory
-csvpath=os.path.join(C:\Users\firme\OneDrive\Documents\GitHub\python-challenge\PyBank\Resources\'budget_data.csv')
-with open(csvpath, newline='') as csvfile:
-    csvreader = csv.reader(csvfile, delimiter=',')
-    print(csvreader)
-    csv_header = next(csvreader)
-    month = []
-    revenue = []
-    revenue_change = []
-    monthly_change = []
-    
-    print(f"Header: {csv_header}")               
+# Variables
+months = []
+p = []
+average_net_change = 0
+total_months = 0
+net_change = []
 
-#Months       
-    for row in csvreader:
-        month.append(row[0])
-        revenue.append(row[1])
-    print(len(month))
- #Revenue 
-    revenue_int = map(int,revenue)
-    total_revenue = (sum(revenue_int))
-    print(total_revenue)
+# Load csv file
+csvpath = os.path.join('Resources', 'budget_data.csv')
 
- #Average Change
-    i = 0
-    for i in range(len(revenue) - 1):
-        profit_loss = int(revenue[i+1]) - int(revenue[i])
- # append profit_loss
-        revenue_change.append(profit_loss)
-    Total = sum(revenue_change)
-    #print(revenue_change)
-    monthly_change = Total / len(revenue_change)
-    print(monthly_change)
-    #print(Total)
-    
-#Greatest Increase
-    profit_increase = max(revenue_change)
-    print(profit_increase)
-    k = revenue_change.index(profit_increase)
-    month_increase = month[k+1]
-    
-#Greatest Decrease
-    profit_decrease = min(revenue_change)
-    print(profit_decrease)
-    j = revenue_change.index(profit_decrease)
-    month_decrease = month[j+1]
+with open(csvpath, newline="") as csvfile:
+    csvreader = csv.reader(csvfile, delimiter=",")
+    reader = csv.reader(csvfile)
+    next(reader, None)
+# Add values to lists
+    for row in reader:
+        month = row[0]
+        months.append(month)
+        values = int(row[1])
+        p.append(values)
 
+total_months = len(months)
+net_total = sum(p)
+net_total_months = len(months) - 1
+difference_budget_data = []
 
-#Print Statements
+for i in range(len(p) - 1):
+    difference_budget_data.append(float(p[i + 1]) - float(p[i]))
+    new_net_total = sum(difference_budget_data)
 
-print(f'Financial Analysis'+'\n')
-print(f'----------------------------'+'\n')
+# Find the sum of profits/losses
+average_net_change = new_net_total/net_total_months
 
+# Find the greatest increase/decrease (date and amount) over the entire period
+min_p = p[p.index(min(p))] - p[p.index(min(p))-1]
+max_p = p[p.index(max(p))] - p[p.index(max(p))-1]
 
-print("Total months: " + str(len(month)))
+# Print out results to console
+print("Financial Analysis")
+print("--------------------")
+print(f"Total Months: {total_months}")
+print(f"Total: ${net_total}")
+print(f"Average Change: ${round(average_net_change,2)}")
+print(f'Greatest Increase in Profits: {months[p.index(max(p))]} (${max_p})')
+print(f"Greatest Descrease in Profits: {months[p.index(min(p))]} (${min_p})")
 
-print("Total: $ " + str(total_revenue))
-      
-print("Average change: $" + str(monthly_change))
-
-print(f"Greatest Increase: {month_increase} (${profit_increase})")
-
-print(f"Greatest Decrease: {month_decrease} (${profit_decrease})")
+# Create a text file with the results
+output_file = 'Analysis/financial_analysis.txt'
+with open(output_file, "w", newline="") as datafile:
+    csvwriter = csv.writer(datafile)
+    csvwriter.writerow(["Financial Analysis"])
+    csvwriter.writerow(["--------------------"])
+    csvwriter.writerow([f"Total Months: {total_months}"])
+    csvwriter.writerow([f"Total: ${net_total}"])
+    csvwriter.writerow([f"Average Change: ${round(average_net_change,2)}"])
+    csvwriter.writerow([f'Greatest Increase in Profits: {months[p.index(max(p))]} (${max_p})'])
+    csvwriter.writerow([f"Greatest Decrease in Profits: {months[p.index(min(p))]} (${min_p})"])
